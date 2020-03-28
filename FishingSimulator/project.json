@@ -1,0 +1,8 @@
+{
+  "engine": "cocos-creator-js",
+  "packages": "packages",
+  "name": "FishingSimulator",
+  "uuid": "d7a1bc4c-697a-48c8-aa6e-a719a2fd18ac",
+  "version": "2.3.3-rc.3",
+  "id": "059e5c91-4bb4-47fe-951a-19cd1eaafb05"
+}

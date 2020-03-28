@@ -1,4 +1,4 @@
-module.exports = {
+const fishConfig = {
     1: {
         id: 1,
         name: 'fish1',
@@ -10,9 +10,6 @@ module.exports = {
     }
 
 }
-
-
-const fishConfig
 
 
 const timeList = [
@@ -34,11 +31,7 @@ const timeList = [
 	}
 ]
 
-const getValue = (key, arr) => {
-	for(let i = 0; i < arr.length; i++) {
-		if(arr[i].key === key) {
-			return arr[i].value
-		}
-	}
-	return ''
+module.exports = {
+	fishConfig,
+	timeList
 }

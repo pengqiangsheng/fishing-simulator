@@ -1,0 +1,22 @@
+{
+  "name": "fishing-simulator",
+  "version": "1.0.0",
+  "description": "ywdd games",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon node koa/app.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pengqiangsheng/fishing-simulator.git"
+  },
+  "author": "pengqiangsheng amingchen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pengqiangsheng/fishing-simulator/issues"
+  },
+  "homepage": "https://github.com/pengqiangsheng/fishing-simulator#readme"
+}

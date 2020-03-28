@@ -1,0 +1,25 @@
+{
+  "name": "ywdd-koa",
+  "version": "1.0.0",
+  "description": "ywdd in koa",
+  "main": "app.js",
+  "dependencies": {
+    "@koa/router": "^8.0.8",
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-jwt": "^3.6.0",
+    "koa-logger": "^3.2.1",
+    "koa-views": "^6.2.1",
+    "koa2-cors": "^2.0.6",
+    "pug": "^2.0.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "scripts": {
+    "dev": "nodemon node app.js"
+  },
+  "author": "pengqiangsheng",
+  "license": "ISC"
+}

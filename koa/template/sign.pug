@@ -1,0 +1,19 @@
+//- includes/head.pug
+doctype html
+html(lang="en")
+  include includes/head.pug
+  body
+    .container
+      .login-wrapper
+        <form action="/login" method="post">
+          <div class="form-group">
+            <label for="exampleInputEmail1">邮箱</label>
+            <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <small id="emailHelp" class="form-text text-muted">未经您的允许我们不会将您的邮箱信息泄露出去。</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">密码</label>
+            <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">马上注册</button>
+        </form>

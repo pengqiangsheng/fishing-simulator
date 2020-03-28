@@ -4,6 +4,7 @@
   "description": "ywdd games",
   "main": "index.js",
   "scripts": {
+    "dev-install": "cd koa && npm install",
     "dev": "nodemon node koa/app.js"
   },
   "devDependencies": {

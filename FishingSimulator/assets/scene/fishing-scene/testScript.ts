@@ -1,16 +1,8 @@
-// Learn TypeScript:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/typescript.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
 
 const {ccclass, property} = cc._decorator;
-// const http = require('http')
-
+const http = import('http')
+const Utils = require('Utils')
+const utils = new Utils()
 @ccclass
 export default class NewClass extends cc.Component {
 
@@ -29,6 +21,9 @@ export default class NewClass extends cc.Component {
     @property(cc.Sprite)
     ruleSprite: cc.Sprite
 
+    @property(cc.ProgressBar)
+    fishBar: cc.ProgressBar
+
 
 
     buttonDown: boolean = false
@@ -36,6 +31,7 @@ export default class NewClass extends cc.Component {
     maxSpeed: number = 5
     acc: number = 9.8
     contactSpeed: number = 100
+    barDirection = false
     // LIFE-CYCLE CALLBACKS:
 
     // http({
@@ -46,7 +42,7 @@ export default class NewClass extends cc.Component {
     //     })
 
     onLoad () {
-
+        console.log('随机整数:', utils.randomInt(10,1))
         cc.director.getPhysicsManager().enabled = true;
         cc.director.getPhysicsManager().gravity = cc.v2(0, -100);
         this.testButton.node.on(cc.Node.EventType.TOUCH_START,function(event){
@@ -58,6 +54,8 @@ export default class NewClass extends cc.Component {
         },this)
 
         cc.log(this.testSprite.node.getComponent("contactTest"))
+
+        cc.log(this.fishBar.progress)
         
     }
 
@@ -75,6 +73,7 @@ export default class NewClass extends cc.Component {
 
     update (dt) {
         this.setSpeed(dt)
+        this.updateFishBar()
         // this.checkIsFish()
     };
 
@@ -88,26 +87,36 @@ export default class NewClass extends cc.Component {
     checkIsFish(){
         let headIn:boolean = this.testSprite.node.y + (this.testSprite.node.height/2) > this.ruleSprite.node.y - (this.ruleSprite.node.height/2)
         let bottomIn:boolean = this.testSprite.node.y - (this.testSprite.node.height/2) < this.ruleSprite.node.y + (this.ruleSprite.node.height/2)
-        // if (headIn && bottomIn){
-        //     cc.log(true)
-        // }else{
-        //     cc.log(false)
-        // }
+        if (headIn && bottomIn){
+            return true
+        }else{
+            return false
+        }
     };
 
     setSpeed(time){
+        // let acc: number[] = [10, 20, 50]
+        // let idx: number = randomInt(2,0)
         if(this.buttonDown){
+            // cc.log("acc:", acc[idx])
             this.speed += this.acc * time * 100
             // this.contactSpeed -= this.acc * time * 100
         }else{
-            // this.speed -= this.acc * time * 100
+            if (this.isContact()){
+                // cc.log("contactSpeed:",this.speed)
+                // let contactSpeed = 0 - this.speed
+                this.speed = - (this.speed + 50)
+                // this.speed = this.contactSpeed
+            }else{
+                this.speed -= this.acc * time * 100
+            }
             // this.contactSpeed += this.acc * time * 100
         }
-        if (this.isContact()){
-            cc.log("contactSpeed:",this.speed)
-            let contactSpeed = 0 - this.speed
-            this.speed = this.contactSpeed
-        }
+        // if (this.isContact()){
+        //     cc.log("contactSpeed:",this.speed)
+        //     let contactSpeed = 0 - this.speed
+        //     this.speed = 500
+        // }
         this.testSprite.node.getComponent(cc.RigidBody).linearVelocity = cc.v2(0, this.speed)
         // this.speed += this.acc * time * 100
         // if(this.buttonDown){
@@ -130,6 +139,30 @@ export default class NewClass extends cc.Component {
         //     }
         // }
     };
+
+    updateFishBar(){
+        if(this.checkIsFish()) {
+            if(this.fishBar.progress < 1) {
+                this.fishBar.progress += 0.01
+            } else {
+                cc.log("get fish!!!")
+            }
+        } else {
+            if(this.fishBar.progress > 0) {
+                this.fishBar.progress -= 0.01
+            } else {
+                cc.log("lose fish!!!")
+            }
+        }
+
+        // if(this.fishBar.progress >= 1) {
+        //     this.barDirection = true
+        // } else if (this.fishBar.progress <= 0) {
+        //     this.barDirection = false
+        // }
+    
+        
+    }
 
    
 }

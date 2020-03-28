@@ -1,5 +1,4 @@
 {
-  "start-scene": "current",
   "group-list": [
     "default"
   ],
@@ -12,25 +11,25 @@
     "3D Physics/Builtin"
   ],
   "last-module-event-record-time": 0,
-  "design-resolution-width": 960,
-  "design-resolution-height": 640,
+  "design-resolution-width": 750,
+  "design-resolution-height": 1334,
   "fit-width": false,
   "fit-height": true,
-  "use-project-simulator-setting": false,
+  "use-project-simulator-setting": true,
   "simulator-orientation": false,
   "use-customize-simulator": false,
   "simulator-resolution": {
-    "width": 960,
-    "height": 640
+    "height": 1334,
+    "width": 750
   },
   "assets-sort-type": "name",
   "facebook": {
-    "enable": false,
     "appID": "",
-    "live": {
+    "audience": {
       "enable": false
     },
-    "audience": {
+    "enable": false,
+    "live": {
       "enable": false
     }
   }

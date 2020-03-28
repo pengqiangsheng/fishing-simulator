@@ -140,7 +140,7 @@ export default class NewClass extends cc.Component {
         // }
     };
 
-    updateFishBar(){
+    updateFishBar () {
         if(this.checkIsFish()) {
             if(this.fishBar.progress < 1) {
                 this.fishBar.progress += 0.01

@@ -3,7 +3,9 @@ const router = new Router()
 const jsonwebtoken = require('jsonwebtoken')
 const util = require('util')
 const crypto = require('crypto')
-
+const DB = require('../fs')
+const db = new DB('account')
+// const fs = require('fs')
 const SECRET = 'pqs-secret'
 
 const USER = {
@@ -28,19 +30,31 @@ const getUserInfo = async ({ authorization: token }) => {
 
 router
   .get('/game', async ctx => {
-    await ctx.render('index', {
-      name: '彭小呆'
-    })
+    await ctx.render('index')
   })
   .get('/sign-in', async ctx => {
-    ctx.set('cache-control', 'public, max-age=3600')
-    await ctx.render('sign')
+    await ctx.render('sign', {
+      url: '/login',
+      btnText: '登陆'
+    })
   })
-  .post('/sign-up', async ctx => {
+  .get('/sign-up', async ctx => {
+    await ctx.render('sign', {
+      url: '/registry',
+      btnText: '马上注册'
+    })
+  })
+  .post('/registry', async ctx => {
     const { email, password } = ctx.request.body
 
     let result = null
-    if(email && password) {
+    if(email
+      && password
+      && db.insert({
+        username: email,
+        password: cryptPwd(password)
+      })
+    ) {
       result = {
         code: 200,
         msg: '注册成功',
@@ -55,23 +69,24 @@ router
         msg: '注册失败'
       }
     }
-    // ctx.redirect(`/?msg=1`)
-    // ctx.status = 301
     ctx.body = result
   })
 
 
 router.post('/login', async ctx => {
   const { username, password } = ctx.request.body
-  const pwdmd5 = cryptPwd(password)
-  // const checkUser = username == USER.username && pwdmd5 == USER.password
-  const checkUser = true
+  const pwd = cryptPwd(password)
+  const data = db.find(username)
+  let checkUser = false
+  if(data.length) {
+    checkUser = data[0].password === pwd
+  }
   if (checkUser) {
     ctx.body = {
       code: 200,
       msg: '登录成功',
       token: jsonwebtoken.sign(
-        { name: USER.username, id: USER.id },
+        { name: username },
         SECRET,
         { expiresIn: '1h' }
       )

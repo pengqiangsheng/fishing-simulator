@@ -41,7 +41,7 @@ app.use(async (ctx, next) => {
 
 app.use(koajwt({ secret: SECRET }).unless({
 	// 登录接口不需要验证
-	path: [/^\/login/, /^\/sign-in/, /^\/sign-up/, /\/game/]
+	path: [/^\/login/, /^\/sign-in/, /^\/sign-up/, /\/game/, /\/registry/]
 }))
 
 app.use(views(resolve(__dirname, './template'), {

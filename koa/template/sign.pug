@@ -5,7 +5,7 @@ html(lang="en")
   body
     .container
       .login-wrapper
-        <form action="/login" method="post">
+        form(action= url, method ='post')
           <div class="form-group">
             <label for="exampleInputEmail1">邮箱</label>
             <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -15,5 +15,4 @@ html(lang="en")
             <label for="exampleInputPassword1">密码</label>
             <input type="password" name="password" class="form-control" id="exampleInputPassword1">
           </div>
-          <button type="submit" class="btn btn-primary btn-block">马上注册</button>
-        </form>
+          button(type= 'submit', class= 'btn btn-primary btn-block') #{btnText}

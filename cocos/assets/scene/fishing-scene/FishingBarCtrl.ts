@@ -7,14 +7,42 @@ const {ccclass, property} = cc._decorator;
 @ccclass
 export default class NewClass extends cc.Component {
     
-
+    @property(cc.Sprite)
+    sliderSprite: cc.Sprite
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {}
+    onLoad () {
+        cc.log("bar:",this.node.getComponent(cc.ProgressBar).progress)
+    }
 
     start () {
 
     }
 
-    // update (dt) {}
+    update (dt) {
+        this.updateFishBar()
+    }
+
+    updateFishBar () {
+        let barProgress: number = this.node.getComponent(cc.ProgressBar).progress
+        if (this.checkIsGetFishSlider()) {
+            if(barProgress < 1) {
+                this.node.getComponent(cc.ProgressBar).progress += 0.01
+            } else {
+                cc.log("get fish!!!")
+            }
+        } else {
+            if(barProgress > 0) {
+                this.node.getComponent(cc.ProgressBar).progress -= 0.01
+            } else {
+                cc.log("lose fish!!!")
+            }
+        }
+    }
+
+    checkIsGetFishSlider () {
+        return this.sliderSprite.node.getComponent("SliderCtrl").checkIsGetFishSlider ()
+    }
+
+
 }

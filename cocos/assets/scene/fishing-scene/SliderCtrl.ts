@@ -9,6 +9,10 @@ export default class NewClass extends cc.Component {
 
     @property(cc.Canvas)
     touchCanvas: cc.Canvas
+    @property(cc.Sprite)
+    catchFish: cc.Sprite
+
+
     // LIFE-CYCLE CALLBACKS:
 
     isContact: boolean = false
@@ -64,5 +68,15 @@ export default class NewClass extends cc.Component {
 
     getSliderContact(){
         return this.isContact
+    }
+
+    checkIsGetFishSlider () {
+        let headIn: boolean = this.node.y + (this.node.height/2) > this.catchFish.node.y - (this.catchFish.node.height/2)
+        let bottomIn: boolean = this.node.y - (this.node.height/2) < this.catchFish.node.y + (this.catchFish.node.height/2)
+        if (headIn && bottomIn) {
+            return true
+        }else{
+            return false
+        }
     }
 }

@@ -43,8 +43,6 @@ export default class NewClass extends cc.Component {
     onEndContact(contact, selfCollider, otherCollider) {
         if (otherCollider.tag == 1) {
             this.isContact = false
-        } else if (otherCollider.tag == 0){
-            cc.log("star!!!!")
         }
     }
 

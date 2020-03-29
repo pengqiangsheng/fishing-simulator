@@ -68,8 +68,8 @@ class EventDispatcher {
    * @param {string} name
    * @memberof EventDispatcher
    */
-  public off(name: string): void {
-    this.EventList = this.EventList.filter(event => event.name !== name)
+  public off(name: string, listener: Listener): void {
+    this.EventList = this.EventList.filter(event => !(event.name === name && event.listener === listener))
   }
   /**
    *dispatchEvent
@@ -85,5 +85,17 @@ class EventDispatcher {
   }
 }
 
+
+const events = EventDispatcher.getInstance()
+const fn = () => {
+  console.log('1111')
+}
+events.on('click', fn)
+
+events.dispatch('click')
+
+events.off('click', fn)
+
+events.dispatch('click')
 
 module.exports = EventDispatcher

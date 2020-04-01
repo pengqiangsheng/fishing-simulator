@@ -16,4 +16,4 @@
 
 ## 在线聊天
 
-[https://gitter.im/fishing-simulator](https://gitter.im/鱼丸蛋蛋/fish?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+[鱼丸蛋蛋](https://gitter.im/鱼丸蛋蛋/fish?utm_source=share-link&utm_medium=link&utm_campaign=share-link)

@@ -1,6 +1,6 @@
 # fishing-simulator
 
-[![Gitter](https://badges.gitter.im/fishing-simulator/community.svg)](https://gitter.im/fishing-simulator/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Gitter](https://badges.gitter.im/鱼丸蛋蛋/fish.svg)](https://gitter.im/鱼丸蛋蛋/fish?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ## 鱼丸蛋蛋旗下首款作品
 
@@ -16,4 +16,4 @@
 
 ## 在线聊天
 
-[https://gitter.im/fishing-simulator](https://gitter.im/fishing-simulator/community?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+[https://gitter.im/fishing-simulator](https://gitter.im/鱼丸蛋蛋/fish?utm_source=share-link&utm_medium=link&utm_campaign=share-link)

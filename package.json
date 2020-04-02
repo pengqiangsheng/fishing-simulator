@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev-install": "cd koa && npm install",
-    "dev": "cd koa && nodemon node app.js"
+    "dev": "cd koa && nodemon node app.js",
+    "D": "bash deploy.sh"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

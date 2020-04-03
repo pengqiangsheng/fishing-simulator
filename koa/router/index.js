@@ -8,6 +8,23 @@ const fs = require('fs')
 const { join } = require('path')
 const debug = require('debug')('app:router')
 const { cryptPwd, generateToken } = require('../tools')
+const cache = require('@pengqiangsheng/apicache')
+                    .options({ debug: true })
+                    .middleware
+// 缓存白名单
+const whitePath = {
+  '/api/registry': true,
+  '/api/login': true
+}
+// 接口缓存
+router.use(cache('2 minutes', ctx => {
+  if(whitePath[ctx.path]) {
+    debug('缓存白名单：', ctx.path)
+    return false
+  }else {
+    return true
+  }
+}))
 
 // 注册
 router.post('/registry', async ctx => {
@@ -75,7 +92,7 @@ fs.readdirSync(join(__dirname, '../module')).reverse().forEach(file => {
   let route = (file in special) ? special[file] : '/' + file.replace(/\.js$/i, '').replace(/_/g, '/')
   let fn = require(join(__dirname, '../module', file))
   let methods = 'get'
-  debug('add runtime route: %o', route)
+  debug('add runtime route:', route)
   router[methods](route, fn())
 })
 debug('=========== Generate End ============')

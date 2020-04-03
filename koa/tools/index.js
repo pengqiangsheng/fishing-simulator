@@ -8,7 +8,6 @@ const cryptPwd = (password, salt = 'pqs') => {
     .createHash('md5')
     .update(password + salt)
     .digest('hex')
-  console.log('md5:', md5)
   return md5
 }
 const getUserInfo = async ({ authorization: token }) => {

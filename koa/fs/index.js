@@ -4,10 +4,12 @@ const debug = require('debug')('app:db')
 class DB {
   constructor(path) {
     this.path = resolve(__dirname, 'data/' + path + '.md')
-    debug(this.path)
+    debug('db init...')
+    debug('db path:', this.path)
   }
 
   find = (name = '') => {
+    debug('db find:', name)
     const buffer = this.read()
     const data = buffer.split('\n').slice(0, -1).map(str => {
       const [ username, password ] = str.split(' ')
@@ -26,6 +28,7 @@ class DB {
   }
 
   insert = ({ username, password }) => {
+    debug('insert user:', username, 'pwd:', password)
     let result = this.find(username)
     if(!result.length) {
       fs.appendFileSync(this.path, username + ' ' + password + '\n')

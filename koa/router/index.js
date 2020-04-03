@@ -59,9 +59,12 @@ router.post('/login', async ctx => {
   const { username, password } = ctx.request.body
   const pwd = cryptPwd(password)
   const data = db.find(username)
+  const { password: orgin } = data[0]
+  const comPwd = orgin.replace(/\r/, '')
+  debug('login db pwd:', comPwd)
   let checkUser = false
   if(data.length) {
-    checkUser = data[0].password === pwd
+    checkUser = comPwd === pwd
   }
   debug('login checkUser %o', checkUser)
   if (checkUser) {

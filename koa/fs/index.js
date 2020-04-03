@@ -1,16 +1,17 @@
 const fs = require('fs')
 const { resolve } = require('path')
-
+const debug = require('debug')('app:db')
 class DB {
   constructor(path) {
     this.path = resolve(__dirname, 'data/' + path + '.md')
-    console.log(this.path)
+    debug(this.path)
   }
 
   find = (name = '') => {
     const buffer = this.read()
     const data = buffer.split('\n').slice(0, -1).map(str => {
       const [ username, password ] = str.split(' ')
+
       return {
         username,
         password
@@ -50,6 +51,4 @@ class DB {
   }
 }
 
-// new DB('account')
-// console.log('-------')
 module.exports = DB

@@ -10,6 +10,7 @@
     "koa-bodyparser": "^4.3.0",
     "koa-jwt": "^3.6.0",
     "koa-logger": "^3.2.1",
+    "koa-static": "^5.0.0",
     "koa-views": "^6.2.1",
     "koa2-cors": "^2.0.6",
     "pug": "^2.0.4"
@@ -18,7 +19,8 @@
     "nodemon": "^2.0.2"
   },
   "scripts": {
-    "dev": "nodemon node app.js"
+    "start": "set NODE_ENV='production' && nodemon node app.js",
+    "dev": "set NODE_ENV='development' && set DEBUG=app:* && nodemon node app.js"
   },
   "author": "pengqiangsheng",
   "license": "ISC"

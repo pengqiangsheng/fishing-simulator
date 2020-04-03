@@ -10,7 +10,7 @@ const bodyParser = require('koa-bodyparser')
 const koajwt = require('koa-jwt')
 const serve = require('koa-static')
 const { SECRET } = require('./tools/constant')
-const debug = require('debug')('app')
+const debug = require('debug')('app:app')
 
 app.use(cors())
 app.use(logger())
@@ -39,7 +39,6 @@ if(process.env.NODE_ENV === 'production') {
   }))
 }
 
-
 app.use(views(resolve(__dirname, './template'), {
 	extension: 'pug'
 }))
@@ -48,7 +47,6 @@ app
 	.use(router.routes())
 	.use(page.routes())
   .use(router.allowedMethods())
-
 
 const port = process.env.PORT || 2333
 const host = process.env.HOST || ''

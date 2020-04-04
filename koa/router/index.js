@@ -9,7 +9,7 @@ const { join } = require('path')
 const debug = require('debug')('app:router')
 const { cryptPwd, generateToken } = require('../tools')
 const cache = require('@pengqiangsheng/apicache')
-                    .options({ debug: true })
+                    .options({ debug: process.env.NODE_ENV === 'development' })
                     .middleware
 // 缓存白名单
 const whitePath = {

@@ -20,8 +20,9 @@
     "nodemon": "^2.0.2"
   },
   "scripts": {
-    "start": "set NODE_ENV='production' && nodemon node app.js",
-    "dev": "set NODE_ENV='development' && set DEBUG=app:* && nodemon node app.js"
+    "start": "set NODE_ENV=production&& set DEBUG=app:*&& nodemon app.js",
+    "dev": "set NODE_ENV=development&& set DEBUG=app:*&& nodemon app.js",
+    "debug": "nodemon --inspect app.js"
   },
   "author": "pengqiangsheng",
   "license": "ISC"

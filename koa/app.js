@@ -11,33 +11,26 @@ const koajwt = require('koa-jwt')
 const serve = require('koa-static')
 const { SECRET } = require('./tools/constant')
 const debug = require('debug')('app:app')
+const { simpleErrorHandler, interceptToken } = require('./middleware')
+
 
 app.use(cors())
 app.use(logger())
 app.use(bodyParser())
 app.use(serve('public', { maxage: 60 * 60 * 1000 }))
 
-// 开发环境关闭token验证
-if(process.env.NODE_ENV === 'production') {
+debug('现在的环境：', process.env.NODE_ENV)
+if(process.env.NODE_ENV === "production") {
+  debug('开启token验证')
   // 对token进行验证
-  app.use(async (ctx, next) => {
-    return next().catch((err) => {
-      if (err.status === 401) {
-        ctx.status = 401;
-        ctx.body = {
-          code: 401,
-          msg: err.message
-        }
-      } else {
-        throw err
-      }
-    })
-  })
+  app.use(interceptToken())
   // 路由白名单
   app.use(koajwt({ secret: SECRET }).unless({
     path: [/\/api\/login/, /\/api\/registry/, /\/page/]
   }))
 }
+
+app.use(simpleErrorHandler())
 
 app.use(views(resolve(__dirname, './template'), {
 	extension: 'pug'

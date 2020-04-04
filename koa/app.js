@@ -13,7 +13,6 @@ const { SECRET } = require('./tools/constant')
 const debug = require('debug')('app:app')
 const { simpleErrorHandler, interceptToken } = require('./middleware')
 
-
 app.use(cors())
 app.use(logger())
 app.use(bodyParser())

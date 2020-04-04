@@ -11,6 +11,9 @@ export default class NewClass extends cc.Component {
     sliderSprite: cc.Sprite
     // LIFE-CYCLE CALLBACKS:
 
+    isGetFish = false
+    isLoseFish = false
+
     onLoad () {
         cc.log("bar:",this.node.getComponent(cc.ProgressBar).progress)
     }
@@ -30,12 +33,14 @@ export default class NewClass extends cc.Component {
                 this.node.getComponent(cc.ProgressBar).progress += 0.01
             } else {
                 cc.log("get fish!!!")
+                this.isGetFish = true
             }
         } else {
             if(barProgress > 0) {
                 this.node.getComponent(cc.ProgressBar).progress -= 0.01
             } else {
                 cc.log("lose fish!!!")
+                this.isLoseFish = true
             }
         }
     }
@@ -43,6 +48,14 @@ export default class NewClass extends cc.Component {
     checkIsGetFishSlider () {
         return this.sliderSprite.node.getComponent("SliderCtrl").checkIsGetFishSlider ()
     }
+
+    // checkGetFish () {
+    //     return this.isGetFish
+    // }
+
+    // loseGetFish () {
+    //     return this.isLoseFish
+    // }
 
 
 }

@@ -20,9 +20,9 @@ export default class NewClass extends cc.Component {
     acc: number = 9.8
 
     onLoad () {
+        cc.log("begin slider ctrl!!!!")
         cc.director.getPhysicsManager().enabled = true;
         cc.director.getPhysicsManager().gravity = cc.v2(0, -100)
-
     }
 
     start () {
@@ -64,7 +64,7 @@ export default class NewClass extends cc.Component {
         this.node.getComponent(cc.RigidBody).linearVelocity = cc.v2(0, this.speed)
     }
 
-    getSliderContact(){
+    getSliderContact () {
         return this.isContact
     }
 

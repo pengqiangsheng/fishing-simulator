@@ -12,6 +12,16 @@ const serve = require('koa-static')
 const { SECRET } = require('./tools/constant')
 const debug = require('debug')('app:app')
 const { simpleErrorHandler, interceptToken } = require('./middleware')
+const mongoose = require('mongoose')
+const dbUrl = 'mongodb://localhost/games'
+mongoose.connect(
+  dbUrl,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  },
+  err => err && debug('数据库连接失败：', err)
+)
 
 app.use(cors())
 app.use(logger())

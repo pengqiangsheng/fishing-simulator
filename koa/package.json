@@ -14,7 +14,9 @@
     "koa-static": "^5.0.0",
     "koa-views": "^6.2.1",
     "koa2-cors": "^2.0.6",
-    "pug": "^2.0.4"
+    "mongoose": "^5.9.7",
+    "pug": "^2.0.4",
+    "underscore": "^1.10.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

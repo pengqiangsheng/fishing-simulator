@@ -1,9 +1,9 @@
 const { Schema } = require('mongoose')
-const debug = require('debug')('app:cat-schema')
+const debug = require('debug')('app:user-schema')
 
-const CatSchema = new Schema({
-  name: String,
-  desc: String,
+const UserSchema = new Schema({
+  username: String,
+  password: String,
 	meta: {
 		creatAt:{
 			type: Date,
@@ -17,18 +17,18 @@ const CatSchema = new Schema({
 })
 
 // save动作之前的动作
-CatSchema.pre('save', function (next) {
+UserSchema.pre('save', function (next) {
 	if (this.isNew) {
-		debug('新增', this)
+		debug('新增')
 		this.meta.creatAt = this.meta.updateAt = Date.now()
 	}else {
-		debug('修改', this)
+		debug('修改')
 		this.meta.updateAt = Date.now()
 	}
 	next()
 })
 
-CatSchema.statics = {
+UserSchema.statics = {
 	fetch: function(cb) {
 		return this
 			.find({})
@@ -42,9 +42,9 @@ CatSchema.statics = {
   },
   findByName: function(name, cb) {
     return this
-      .findOne({name: name})
+      .findOne({ username: name })
       .exec(cb)
   }
 }
 
-module.exports = CatSchema
+module.exports = UserSchema

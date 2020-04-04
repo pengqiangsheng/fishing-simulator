@@ -5,6 +5,7 @@ const router = new Router({
 const DB = require('../fs')
 const db = new DB('account')
 const fs = require('fs')
+const { User } = require('../mongoose')
 const { join } = require('path')
 const debug = require('debug')('app:router')
 const { cryptPwd, generateToken } = require('../tools')
@@ -12,13 +13,12 @@ const cache = require('@pengqiangsheng/apicache')
                     .options({ debug: process.env.NODE_ENV === 'development' })
                     .middleware
 // 缓存白名单
-const whitePath = {
-  '/api/registry': true,
-  '/api/login': true
-}
+const whitePath = ['registry', 'login', ...require('../module/filter')]
+
 // 接口缓存
 router.use(cache('2 minutes', ctx => {
-  if(whitePath[ctx.path]) {
+  const has = whitePath.findIndex(path => ctx.path.indexOf(path) > -1) > -1
+  if(has) {
     debug('缓存白名单：', ctx.path)
     return false
   }else {
@@ -29,56 +29,64 @@ router.use(cache('2 minutes', ctx => {
 // 注册
 router.post('/registry', async ctx => {
   const { username, password } = ctx.request.body
-  let result = null
-  if(username
-    && password
-    && db.insert({
-      username: username,
-      password: cryptPwd(password)
+  try {
+    let _user = null
+    _user = await User.findByName(username)
+    if(_user) {
+      return ctx.body = {
+        code: 400,
+        msg: '已有账号，请重新输入'
+      }
+    }
+    const pwd = cryptPwd(password)
+    _user = new User({
+      username,
+      password: pwd
     })
-  ) {
-    result = {
+    const result = await _user.save()
+    debug('新增完成', result._id)
+    ctx.body = {
       code: 200,
       msg: '注册成功',
       user: {
         username,
-        password
+        password: pwd
       }
     }
-  }else {
-    result = {
+  }catch(err) {
+    ctx.body = {
       code: 400,
       msg: '注册失败'
     }
   }
-  ctx.body = result
 })
 
 // 登录
 router.post('/login', async ctx => {
   const { username, password } = ctx.request.body
-  const pwd = cryptPwd(password)
-  const data = db.find(username)
-  const { password: orgin } = data[0]
-  const comPwd = orgin.replace(/\r/, '')
-  debug('login db pwd:', comPwd)
-  let checkUser = false
-  if(data.length) {
-    checkUser = comPwd === pwd
-  }
-  debug('login checkUser %o', checkUser)
-  if (checkUser) {
-    ctx.body = {
-      code: 200,
-      msg: '登录成功',
-      token: generateToken(username)
+  try {
+    const _user = await User.findByName(username)
+    if(_user
+      && _user.password === cryptPwd(password)
+    ) {
+      ctx.body = {
+        code: 200,
+        msg: '登录成功',
+        token: generateToken(username)
+      }
+    }else {
+      ctx.body = {
+        code: -1,
+        msg: '账号或密码错误'
+      }
     }
-  } else {
+  }catch(err) {
     ctx.body = {
-      code: 400,
-      msg: '用户名密码不匹配'
+      code: 500,
+      msg: '数据库异常'
     }
   }
+
 })
 
 // router.redirect('/login', 'sign-in')
@@ -89,13 +97,16 @@ const special = {
   'fm_trash.js': '/fm_trash',
   'personal_fm.js': '/personal_fm'
 }
+const FILTER = 'filter.js'
+
 debug('========== Generate Router ==========')
 fs.readdirSync(join(__dirname, '../module')).reverse().forEach(file => {
   if(!file.endsWith('.js')) return
+  if(file === FILTER) return
   let route = (file in special) ? special[file] : '/' + file.replace(/\.js$/i, '').replace(/_/g, '/')
   let fn = require(join(__dirname, '../module', file))
-  let methods = 'get'
-  debug('add runtime route:', route)
+  let methods = 'post'
+  debug('add runtime route:', `/api${route}`)
   router[methods](route, fn())
 })
 debug('=========== Generate End ============')

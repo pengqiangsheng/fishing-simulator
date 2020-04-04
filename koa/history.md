@@ -3,10 +3,10 @@
 ## 1.0.0
 项目结构调整
 |---------------------|
-|-- fs 文件数据库
-|-- middleware 自定义中间件
+|-- middleware 中间件
 |-- mock 数据生成
 |-- module 路由模块
+|-- mongoose 数据库model
 |-- public 静态资源
 |-- router 路由控制器
 |-- template 模板

@@ -70,6 +70,7 @@ export default class NewClass extends cc.Component {
                     this.setTestTipText("鱼儿上钩了！！！")
                     this.fishingNode.active = true
                     this.gameState = HOOK_FISH
+                    this.throwPoleBar.node.getComponent(cc.ProgressBar).progress = 0
                     this.throwPoleBar.node.active = false
                 }.bind(this))
 
@@ -122,12 +123,18 @@ export default class NewClass extends cc.Component {
                 this.fishingNode.active = false
                 this.setTestTipText("钓到了一条鱼！")
                 this.runLabelJumpAction()
+                this.fishingNode.getChildByName("FishingBar").getComponent("FishingBarCtrl").isGetFish = false
+                this.fishingNode.getChildByName("FishingBar").getComponent("FishingBarCtrl").isLoseFish = false
+                this.fishingNode.getChildByName("FishingBar").getComponent(cc.ProgressBar).progress = 0.5
             }
             else if (this.checkGetOrLoseFish() == 0) {
                 this.gameState = LOSE_FISH
                 this.fishingNode.active = false
                 this.setTestTipText("鱼儿跑了")
                 this.runLabelScaleAction()
+                this.fishingNode.getChildByName("FishingBar").getComponent("FishingBarCtrl").isGetFish = false
+                this.fishingNode.getChildByName("FishingBar").getComponent("FishingBarCtrl").isLoseFish = false
+                this.fishingNode.getChildByName("FishingBar").getComponent(cc.ProgressBar).progress = 0.5
             }
 
         }    
@@ -177,11 +184,11 @@ export default class NewClass extends cc.Component {
 
 
     checkGetOrLoseFish () {
-        if (this.fishingNode.getChildByName("FishingBar").getComponent("FishingBarCtrl").isGetFish{
+        if (this.fishingNode.getChildByName("FishingBar").getComponent("FishingBarCtrl").isGetFish){
             return 1
         }
 
-        if (this.fishingNode.getChildByName("FishingBar").getComponent("FishingBarCtrl").isLoseFish{
+        if (this.fishingNode.getChildByName("FishingBar").getComponent("FishingBarCtrl").isLoseFish){
             return 0
         }
         return 3

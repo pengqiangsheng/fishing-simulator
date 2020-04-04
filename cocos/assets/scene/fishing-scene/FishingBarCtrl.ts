@@ -26,6 +26,12 @@ export default class NewClass extends cc.Component {
         this.updateFishBar()
     }
 
+    onEnable () {
+        this.isGetFish = false
+        this.isLoseFish = false
+        this.node.getComponent(cc.ProgressBar).progress
+    }
+
     updateFishBar () {
         let barProgress: number = this.node.getComponent(cc.ProgressBar).progress
         if (this.checkIsGetFishSlider()) {

@@ -1,6 +1,7 @@
 # Koa + redis + mongodb
 
 ## 项目结构
+项目结构
 |---------------------|
 |-- middleware 中间件
 |-- mock 数据生成

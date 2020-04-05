@@ -1,6 +1,6 @@
 # Koa + redis + mongodb
 
-项目结构
+## 项目结构
 |---------------------|
 |-- middleware 中间件
 |-- mock 数据生成
@@ -13,16 +13,16 @@
 |-- app.js 入口文件
 |---------------------|
 
-# 更新说明
+## 更新说明
 [更新说明](./history.md)
 
-# 运行说明
+## 运行说明
 - 1.安装mongodb、redis数据库（端口默认）
 - 2.安装项目所有依赖
 - 3.`yarn dev`: 以开发环境下运行
 - 4.`yarn start`: 以生产环境下运行
 
-# 环境说明
+## 环境说明
 
 > 本项目分为开发环境和生产环境两种
 
@@ -31,9 +31,9 @@
 - 1.拥有相同的日志输出
 - 2.token验证仅在生产环境生效
 
-# 开发说明
+## 开发说明
 
-## 路由开发
+### 路由开发
 
 > 在`module`文件下开始开发你的第一个接口
 
@@ -60,13 +60,16 @@ module.exports = () => {
 
 注意：所有路由都以`post`形式，所以你需要安装`postman软件`去测试你的接口。
 
-## 数据层model 开发
+### 数据层model 开发
 
 > 在`mongoose/schema`文件夹下开发。
 
 schema文件开发规范：
 - 1.文件名用小写驼峰表示：猫类 ==> cat.js 灰猫类 ==> grayCat.js
 - 2.实例化类名单词开头大写表示：`const CatSchema = new Schema()`
+
+schema是什么？
+> 什么？你不会，没关系 [mongoose文档](http://www.mongoosejs.net/)
 
 ```js
 // cat.js
@@ -99,7 +102,7 @@ debug('CatSchema 初始化')
 module.exports = CatSchema
 ```
 
-## 日志输出规范
+### 日志输出规范
 
 > 以上述`cat.js` 说明
 

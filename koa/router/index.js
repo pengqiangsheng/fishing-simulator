@@ -2,8 +2,6 @@ const Router = require('@koa/router')
 const router = new Router({
   prefix: '/api'
 })
-const DB = require('../fs')
-const db = new DB('account')
 const fs = require('fs')
 const { User } = require('../mongoose')
 const { join } = require('path')

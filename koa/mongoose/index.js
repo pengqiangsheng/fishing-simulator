@@ -1,11 +1,18 @@
+const fs = require('fs')
 const { model } = require('mongoose')
-const CatSchema = require('./schema/cat')
-const UserSchema = require('./schema/user')
+const { join } = require('path')
+const debug = require('debug')('app:schema')
 
-const Cat = model('Cat', CatSchema)
-const User = model('User', UserSchema)
+debug('============ Generate Schema ============')
+const obj = {}
+fs.readdirSync(join(__dirname, './schema')).reverse().forEach(file => {
+  if(!file.endsWith('.js')) return
+  file = file.replace(/\.js$/i, '')
+  const modelName = file.charAt(0).toUpperCase() + file.slice(1)
+  const schema = require(`./schema/${file}`)
+  obj[modelName] = model(modelName, schema)
+})
+debug('schema result:', obj)
+debug('============  Generate End   ============')
 
-module.exports = {
-  Cat,
-  User
-}
+module.exports = obj

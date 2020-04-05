@@ -1,6 +1,7 @@
 const { Schema } = require('mongoose')
+const event = require('../../tools/event')
 const debug = require('debug')('app:cat-schema')
-
+const { CAT, CLEARCACHE } = require('../../tools/constant')
 const CatSchema = new Schema({
   name: String,
   desc: String,
@@ -25,6 +26,7 @@ CatSchema.pre('save', function (next) {
 		debug('修改', this)
 		this.meta.updateAt = Date.now()
 	}
+	event.emit(CLEARCACHE, CAT)
 	next()
 })
 

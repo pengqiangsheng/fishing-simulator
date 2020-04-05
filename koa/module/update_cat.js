@@ -1,12 +1,9 @@
 const { Cat } = require('../mongoose')
-const apicache = require('@pengqiangsheng/apicache')
 const debug = require('debug')('app:cat-find-and-update')
 
 module.exports = () => {
   return async ctx => {
     try{
-      // 新增or修改 清除缓存分组cat
-      apicache.clear('cat')
       const { query, name } = ctx.request.body
       if(!query || !name) {
         ctx.body = {
@@ -16,7 +13,7 @@ module.exports = () => {
         return
       } 
       const data = await Cat.findByName(query)
-      debug('findeByName', data)
+      debug(data)
       if(!data) {
         ctx.body = {
           code: 500,

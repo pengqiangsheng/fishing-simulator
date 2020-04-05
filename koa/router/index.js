@@ -1,17 +1,22 @@
 const Router = require('@koa/router')
-const router = new Router({
-  prefix: '/api'
-})
+const router = new Router({ prefix: '/api' })
 const fs = require('fs')
 const { User } = require('../mongoose')
 const { join } = require('path')
 const debug = require('debug')('app:router')
 const { cryptPwd, generateToken } = require('../tools')
-const cache = require('@pengqiangsheng/apicache')
-                    .options({ debug: process.env.NODE_ENV === 'development' })
-                    .middleware
+const { CLEARCACHE } = require('../tools/constant')
+const apicache = require('@pengqiangsheng/apicache')
+const cache = apicache.options({ debug: process.env.NODE_ENV === 'development' }).middleware
 // 缓存白名单
 const whitePath = ['registry', 'login', ...require('../module/filter')]
+//event.js 文件
+const event = require('../tools/event')
+// 清除缓存分组
+event.on(CLEARCACHE, function(groupName) { 
+  debug('清除分组缓存', groupName)
+  apicache.clear(groupName)
+})
 
 // 接口缓存
 router.use(cache('2 minutes', ctx => {

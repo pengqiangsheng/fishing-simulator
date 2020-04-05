@@ -67,6 +67,7 @@ export default class NewClass extends cc.Component {
                 let waitTime = cc.delayTime(this.getWaitFishTime())
 
                 let getFishFunc = cc.callFunc(function(){
+                    this.is_throw = false
                     this.setTestTipText("鱼儿上钩了！！！")
                     this.fishingNode.active = true
                     this.gameState = HOOK_FISH

@@ -57,6 +57,7 @@ export default class NewClass extends cc.Component {
     }
 
     onEnable () {
+        cc.log("aimingChen 调用摧毁算法！！！！！！")
         this.node.getComponent(cc.ProgressBar).progress = 0
     }
 

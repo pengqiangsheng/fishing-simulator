@@ -4,6 +4,7 @@ const fs = require('fs')
 const { User } = require('../mongoose')
 const { join } = require('path')
 const debug = require('debug')('app:router')
+const Result =  require('../tools/result')
 const { cryptPwd, generateToken } = require('../tools')
 const { CLEARCACHE } = require('../tools/constant')
 const apicache = require('@pengqiangsheng/apicache')
@@ -101,7 +102,6 @@ const special = {
   'personal_fm.js': '/personal_fm'
 }
 const FILTER = 'filter.js'
-
 debug('========== Generate Router ==========')
 fs.readdirSync(join(__dirname, '../module')).reverse().forEach(file => {
   if(!file.endsWith('.js')) return
@@ -110,7 +110,17 @@ fs.readdirSync(join(__dirname, '../module')).reverse().forEach(file => {
   let fn = require(join(__dirname, '../module', file))
   let methods = 'post'
   debug('add runtime route:', `/api${route}`)
-  router[methods](route, fn())
+  router[methods](route, async ctx => {
+    const result = new Result()
+    try {
+      await fn(ctx, result)
+    } catch(err) {
+      result.set('msg', err)
+    } finally {
+      ctx.body = result.format()
+    }
+  })
+  // router[methods](route, fn())
 })
 debug('=========== Generate End ============')
 

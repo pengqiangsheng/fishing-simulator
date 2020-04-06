@@ -1,1 +1,1 @@
-module.exports = ['update', 'add']
+module.exports = ['update', 'add', 'del']

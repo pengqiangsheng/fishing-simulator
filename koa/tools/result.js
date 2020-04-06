@@ -1,5 +1,3 @@
-const debug = require('debug')('app:tools-result')
-
 module.exports = class {
   constructor() {
     this.init({})
@@ -14,7 +12,6 @@ module.exports = class {
       throw new Error('参数错误')
     }
     if(args.length === 1 && typeof(args[0]) === 'object') {
-      debug('111')
       this.init(args[0])
     }
     if(args.length === 2) {

@@ -1,0 +1,64 @@
+extends includes/layout.pug
+
+block content
+  .container
+    .table-responsive
+      table.table.table-hover
+        thead
+          tr
+            th(scope="col") #
+            th(scope="col") 句子
+            th(scope="col") 类型
+            th(scope="col") 来源
+            th(scope="col") 创作者
+            th(scope="col") 操作
+        tbody
+          -
+          each item, index in list
+            tr(class=`item-id-${item._id}`)
+              th(scope="row")= index + 1
+              td= item.move
+              td= item.type
+              td= item.from
+              td= item.creator
+              td
+                button.btn.btn-success.btn-sm(type="submit") 查看
+                button.btn.btn-danger.btn-sm.del(type="button", data-id= item._id) 删除
+block styles
+  style.
+    .btn:first-child{
+      margin-right: 10px;}
+
+block scripts
+  script.
+    $(function() {
+      $('.del').click(function(event) {
+        const target = $(event.target)
+        const id = target.data('id')
+        const tr = $('.item-id-' + id)
+        console.log(id)
+        fetch('/api/del/move', {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify({id})
+        })
+          .then(function(response) {
+            return response.json()
+          })
+          .then(function(res) {
+            const { code, data } = res
+            if(code !== 200) {
+              console.log('删除失败')
+              return
+            }
+            const { deletedCount, n, ok } = data
+            if(deletedCount && n && ok) {
+              if(tr.length > 0) {
+                tr.remove()
+              }
+            }
+          })
+      })
+    })

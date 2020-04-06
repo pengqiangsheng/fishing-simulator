@@ -2,6 +2,7 @@ const Router = require('@koa/router')
 const router = new Router({
   prefix: '/page'
 })
+const { Move } = require('../mongoose')
 
 router
   .get('/home', async ctx => {
@@ -17,6 +18,12 @@ router
     await ctx.render('sign', {
       url: '/api/registry',
       btnText: '马上注册'
+    })
+  })
+  .get('/move', async ctx => {
+    const list = await Move.fetch()
+    await ctx.render('move', {
+      list
     })
   })
 

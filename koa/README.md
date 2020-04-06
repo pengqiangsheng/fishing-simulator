@@ -39,14 +39,17 @@
 > 在`module`文件下开始开发你的第一个接口
 
 ```js
-// test.js
-module.exports = () => {
-  return async ctx => {
-    ctx.body = {
-      name: '测试',
-      desc: '这是一个测试接口！'
-    }
-  }
+const { Cat } = require('../mongoose')
+// 首页
+module.exports = async (ctx, result) => {
+	// 从数据库中查找所有cat
+	const data = await Cat.fetch()
+	// 返回结果
+  result.set({
+    code: 200,
+    msg: '查询成功',
+    data
+  })
 }
 ```
 路由开发规范：

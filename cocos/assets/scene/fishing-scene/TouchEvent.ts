@@ -3,8 +3,6 @@
 //act:      触摸事件
 
 const {ccclass, property} = cc._decorator;
-const Utils = require('Utils')
-const utils = new Utils()
 
 const BEGIN_GAME = 0
 const BEGIN_FISH = 1
@@ -178,9 +176,9 @@ export default class NewClass extends cc.Component {
 
     // 获得鱼上钩的时间（后期调整）
     getWaitFishTime () {
-        let delayTime = utils.randomInt(2, 6)
-        cc.log("delayTime:", delayTime)
-        return delayTime
+        // // let delayTime = utils.randomInt(2, 6)
+        // cc.log("delayTime:", delayTime)
+        return 2
     }
 
 

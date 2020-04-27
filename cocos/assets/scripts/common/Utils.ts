@@ -1,11 +1,11 @@
-class Utils {
-    constructor() {
-        console.log('Utils 实例化')
-    }
+class CommonUtils{
+    public static readonly Effect: CommonUtils = new CommonUtils();
+
     // 随机整数，区间[min, max]
     randomInt = (max, min) => {
         return Math.floor(Math.random() * (max - min + 1) + min)
     }
+
     // 通过key去获取相应的value
     getArrayValueByKey = (key, arr) => {
         for(let i = 0; i < arr.length; i++) {
@@ -16,5 +16,4 @@ class Utils {
         return ''
     }
 }
-
-module.exports = Utils
+export const Utils = CommonUtils.Effect;

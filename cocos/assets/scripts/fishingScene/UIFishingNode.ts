@@ -3,6 +3,7 @@
 //act:      钓鱼控制节点
 
 const {ccclass, property} = cc._decorator;
+import { EffectAction } from "../Effect/EffectAction";
 
 @ccclass
 export class FishingNode extends cc.Component {
@@ -41,6 +42,7 @@ export class FishingNode extends cc.Component {
         let bottomIn: boolean = this.sliderNode.node.y - (this.sliderNode.node.height/2) < this.catchFishNode.node.y + (this.catchFishNode.node.height/2)
         if (headIn && bottomIn) {
             this.catchFishNode.node.opacity = 255
+            EffectAction.nodeShake(this.catchFishNode.node)
             return true
         }else{
             this.catchFishNode.node.opacity = 100
